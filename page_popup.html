@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        body {
+            background-color: #FFFFFF;
+        	/* background-image: linear-gradient(#fccc63, #cd486b); */
+        	background-image: linear-gradient(rgb(205, 72, 107, 1),rgb(252, 204, 99, 1));
+        	width: 420px;
+        	font-size: 100%;
+        	padding-bottom:5px;
+        	padding-top:5px;
+        	padding-left:10px;
+        	padding-right:10px;
+        }
+		
+		textarea {
+			width: 100%;
+			border:none;
+			height:160px;
+		}
+      
+        
+        a {
+            width: 140px;
+        	text-align:center;
+			text-decoration:none;
+			color:#DF4000;
+        }
+        button {
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            margin: 4px 2px;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .buttonStart {background-color: #008CBA; width:48%} 
+        .buttonStop {background-color: #f44336;width:48%}
+        /* ig color:
+        .buttonStart {background-color: #4c68d7; width:48%}
+        .buttonStop {background-color: #e95950;width:48%}
+        normal:
+        .buttonStart {background-color: #008CBA; width:48%} 
+        .buttonStop {background-color: #f44336;width:48%}
+        */
+        
+        
+        input[type=number]{
+        	border:none;
+        	height:100%;
+        	width:100%;
+        	font-size: 150%;
+        	text-align:center;
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        }
+		
+		td:first-child:after {
+			content: attr(aria-label);
+		}
+		.tableFixHead    { overflow-y: auto; height: auto; max-height:300px; }
+		.tableFixHead th { position: sticky; top: 0; }
+        table {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        	text-align:center;
+        }
+        th {
+            padding-top: 10px;
+            padding-bottom: 10px;
+          /*  text-align: left; */
+            background-color: #262626;
+            color: white;
+        }
+        td, th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        
+		.specialTable td{
+		 padding:0px;
+		}
+		.imgInstagram{
+			width:30px;
+			padding:0px;
+			margin-bottom:-4px;
+		}
+        tr:nth-child(even){background-color: #f2f2f2;}
+        tr:nth-child(odd){background-color: #FFFFFF;}
+        
+        tr:hover {background-color: #ddd;}
+    </style>
+</head>
+
+<body>
+    <div style="display:none">
+        <div id="divTimer">00:00:00</div>
+        <hr>
+    </div>
+	<textarea id="copyClipboard" style="display:none"></textarea>
+    <table border=1>
+        <tr>
+            <th style="width:25%">Status</th>
+            <td id="tdStatus">
+                <div id="divStatus" style="color:white;font-weight:bold;">STOPPED</div>
+            </td>
+        </tr>
+        <tr>
+            <th>Mode</th>
+            <td>
+                <form>
+                    <label id="labelRadioBoxFollow"><input type="radio" name="type" id="radioBoxFollow" checked/><b>FOLLOW</b></label>
+                    <label id="labelRadioBoxUnFollow"><input type="radio" name="type" id="radioBoxUnfollow"/><b>UNFOLLOW</b></label>
+                    <label id="labelRadioBoxScrape"><input type="radio" name="type" id="radioBoxScrape"/><b>SCRAPE</b></label>
+                </form>
+            </td>
+        </tr>
+        <!--  <tr>
+   <th colspan="2">Count</th>
+   </tr> -->
+        <tr id="trFollows">
+            <th>Follows</th>
+            <td>
+                <font id="divNbFollows" size="4">0</font>
+            </td>
+        </tr>
+        <tr id="trUnfollows">
+            <th>Unfollows</th>
+            <td>
+                <font id="divNbUnfollows" size="4">0</font>
+            </td>
+        </tr>
+        <!-- <tr>
+   <th colspan="2">Last</th>
+   </tr> -->
+        <tr id="trLastUsername">
+            <th>Last username</th>
+            <td>
+                <font id="divLastFollowed">-</font>
+            </td>
+
+        </tr>
+        <!--  <tr>
+   <th>Unfollowed</th>
+   <td><font id="divLastUnFollowed">-</font></td>
+  </tr>
+  -->
+    </table>
+    <br>
+	
+	
+	
+	
+	
+	<div id="divConfigurationScrape" style="display: block">
+	
+		<div id="divTableFixed" class="tableFixHead">
+			<table id="tableUsernamesInfos" border=1 class="specialTable">
+			<thead>
+			<tr>
+				<th id="thNumUsername">N</th>
+				<th id="thImgSrc">Image</th>
+				<th style="width:100px;max-width:100px" id="thUsernames">Username</th>
+				<th id="thIsFollowed">Followed</th>
+			</tr>
+			</thead>
+			<tbody id="tBodyUsernamesInfoList">
+				<tr>
+				<!--  style.display = "table-cell";
+				 style.display = "none";
+				 -->
+					<td class='tdNumUsernameList'>-</td>	
+					<td class='tdImgSrcList'>-</td>	
+					<td class='tdUsernamesList'>-</td>	
+					<td class='tdIsFollowedList'>-</td>	
+				</tr>
+			</tbody>
+			</table>
+					<!--<div id="divTextAreaUsernamesList" style="text-align:left;background-color:WHITE;border: 0px solid #ccc;height:160px;max-height: 300px;max-width:400px; overflow: auto;" contentEditable="true">
+					</div>
+					<!--<textarea id="textAreaUsernamesList2" style=""></textarea>-->
+		</div>
+		<table border=1>
+			<tr>
+				<td id="tdNbUsernamesScraped">0</td>
+				<th id="tdCopyUsernames" style="cursor: pointer;">Copy Usernames</th>
+				<th id="tdClear" style="cursor: pointer;">Clear</th>
+			</tr>
+		</table>
+		<br>
+		<table border=1>
+			<tr>
+				<th id="dede">Export</th>
+				<th id="exportXLS" style="cursor: pointer;background-color:GREEN">XLS</th>
+				<th id="exportCSV" style="cursor: pointer;background-color:MediumSeaGreen ">CSV</th>
+				<th id="exportTXT" style="cursor: pointer;background-color:SkyBlue">TXT</th>
+				<th id="exportHTML" style="cursor: pointer;background-color:DarkCyan">HTML</th>
+			</tr>
+		</table>
+		<br>
+				
+		<table border=1>
+			<tr>
+				<th>Sleep (seconds)</th>
+				<th>For X usernames</th>
+			</tr>
+			<tr>
+				<td><input type="number" id="inputNumberSleepTimeScrapeSeconds" min="1" value="10" /></td>
+				<td><input type="number" id="inputNumberSleepEveryXUsernamesScraped" min="12" value="100" /></td>
+			</tr>
+			<tr>
+				<th colspan="2">Max usernames</th>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="number" id="inputNumberUsernamesScrapedMax" min="1" value="1000" /></td>
+			</tr>
+		</table>
+		<iframe id="txtArea1" style="display:none"></iframe>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	<div id="divConfigurationFollowOrUnfollow" style="display: none">
+		<table border=1>
+			<tr>
+				<th colspan="2">Sleep between follow/unfollow (seconds)</th>
+			</tr>
+			<tr>
+				<td>
+					<font size=2>Minimun</font><input type="number" id="inputNumberDelaySecMin" min="1" value="30" style="margin-top:2px" /></td>
+				<td>
+					<font size=2>Maximum</font><input type="number" id="inputNumberDelaySecMax" min="1" value="60" style="margin-top:2px" /></td>
+			</tr>
+			<tr>
+				<th>Sleep (minutes)</th>
+				<th>For X follows/unfollows</th>
+			</tr>
+			<tr>
+				<td><input type="number" id="inputNumberBreakTimeInMins" min="1" value="10" /></td>
+				<td><input type="number" id="inputNumberBreakEveryXFollowsOrUnfollows" min="2" value="100" /></td>
+			</tr>
+			<tr>
+				<th colspan="2">Max follows/unfollows</th>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="number" id="inputNumberFollowUnfollowMax" min="1" value="200" /></td>
+			</tr>
+		</table>
+	</div>
+	
+    <div style="padding-top:10px">
+        <center>
+            <button class="buttonStart" id="buttonStart"><b>START</b></button>
+            <button class="buttonStop " id="buttonStop"><b>STOP</b></button>
+        </center>
+    </div>
+    <script src="functions_common.js"></script>
+    <script src="functions_popup.js"></script>
+</body>
+
+</html>

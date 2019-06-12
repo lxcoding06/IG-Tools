@@ -1,0 +1,47 @@
+{
+  "version": "1.0",
+  "name": "Instagram Auto Follow/Unfollow/Scraper",
+  "short_name": "InstagramAutoFollowScraper",
+  "description": "Follow/Unfollow/Scrape automatically instagram accounts",
+  "permissions": [
+    "<all_urls>",
+	"activeTab", 
+	"tabs",
+	"webRequest",
+	"webRequestBlocking",
+	"storage"],
+  "background": {
+    "scripts": [
+			"background.js"
+		],
+    "persistent": true
+  },
+  "content_scripts": [
+        {
+          "matches": [
+            "<all_urls>"
+          ],
+		  "run_at": "document_start",
+          "js": [
+			  "content.js", 
+			  "functions_common.js"
+		  ]
+        }
+      ],
+  "browser_action": {
+    "default_popup": "page_popup.html",
+    "default_icon": {
+      "16": "images/locker_green_16p.png",
+      "32": "images/locker_green_32p.png",
+      "48": "images/locker_green_48p.png",
+      "128": "images/locker_green_128p.png"
+    }
+  },
+  "icons": {
+    "16": "images/locker_green_16p.png",
+      "32": "images/locker_green_32p.png",
+      "48": "images/locker_green_48p.png",
+      "128": "images/locker_green_128p.png"
+  },
+  "manifest_version": 2
+}
